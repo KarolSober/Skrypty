@@ -1,0 +1,2 @@
+# Skrypty
+Skrypty różne

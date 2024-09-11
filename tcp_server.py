@@ -1,5 +1,5 @@
 #! /usr/bin/python3
-
+""" Narzędzie którego można użyć ddo rekonesansu, bardzo podobne do popularnego p0F """
 import socket
 
 TCP_IP = "192.168.181.190"
@@ -21,11 +21,3 @@ while 1:
 	conn.send(data) #echo
 
 conn.close
-
-
-
-s = socket.socket()
-s.connect(("10.0.2.15", 22))
-answer = s.recv(1024)
-print (answer)
-s.close
